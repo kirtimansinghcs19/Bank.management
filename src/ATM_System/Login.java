@@ -29,6 +29,7 @@ public class Login extends JFrame {
         setTitle(pad+"AUTOMATED TELLER MACHINE");
         setSize( 700,700 );
 
+
         j1 = new JLabel("WELCOME TO ATM");
         j1.setFont(new Font("Osward", Font.BOLD, 38));
     }
