@@ -11,12 +11,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Login extends JFrame {
-    private JLabel j1,j2,j3;
-    private JTextField t1;
-    private JPasswordField p1;
-    private JButton b1,b2,b3;
-    Login(){
-        setFont(new Font("System", Font.BOLD, 22));
+    private JLabel headLine, cardNumber, pin;
+    private JTextField cardNumberEnter;
+    private JPasswordField enterPin;
+    private JButton signIn, clear, signUp;
+
+    Login() {
+        setFont( new Font( "System", Font.BOLD, 22 ) );
         Font f = getFont();
         FontMetrics fm = getFontMetrics( f );
         int x = fm.stringWidth( "AUTOMATED TELLER MACHINE" );
@@ -33,54 +34,54 @@ public class Login extends JFrame {
         setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         setLocationRelativeTo( null );
 
-        j1 = new JLabel( "WELCOME TO ATM" );
-        j1.setFont( new Font( "Osward", Font.BOLD, 38 ) );
-        j1.setBounds( 175, 50, 450, 200 );
+        headLine = new JLabel( "WELCOME TO ATM" );
+        headLine.setFont( new Font( "Osward", Font.BOLD, 38 ) );
+        headLine.setBounds( 175, 50, 450, 200 );
 
-        j2 = new JLabel( "Card No:" );
-        j2.setFont( new Font( "Raleway", Font.BOLD, 28 ) );
-        j2.setBounds( 125, 150, 375, 200 );
+        cardNumber = new JLabel( "Card No:" );
+        cardNumber.setFont( new Font( "Raleway", Font.BOLD, 28 ) );
+        cardNumber.setBounds( 125, 150, 375, 200 );
 
-        j3 = new JLabel( "PIN:" );
-        j3.setFont( new Font( "Raleway", Font.BOLD, 28 ) );
-        j3.setBounds( 125, 250, 375, 200 );
+        pin = new JLabel( "PIN:" );
+        pin.setFont( new Font( "Raleway", Font.BOLD, 28 ) );
+        pin.setBounds( 125, 250, 375, 200 );
 
-        t1 = new JTextField( 15 );
-        t1.setFont( new Font( "Arial", Font.BOLD, 14 ) );
-        t1.setBounds( 300, 235, 230, 30 );
-
-
-        p1 = new JPasswordField( 15 );
-        p1.setFont( new Font( "Arial", Font.BOLD, 14 ) );
-        p1.setBounds( 300, 335, 230, 30 );
-
-        b1 = new JButton( "SIGN IN" );
-        b1.setFont( new Font( "Arial", Font.BOLD, 14 ) );
-        b1.setBounds( 300, 400, 100, 30 );
-        b1.setBackground( Color.BLACK );
-        b1.setForeground( Color.WHITE );
-
-        b2 = new JButton( "CLEAR" );
-        b2.setFont( new Font( "Arial", Font.BOLD, 14 ) );
-        b2.setBounds( 430, 400, 100, 30 );
-        b2.setBackground( Color.BLACK );
-        b2.setForeground( Color.WHITE );
-
-        b3 = new JButton( "SIGN UP" );
-        b3.setFont( new Font( "Arial", Font.BOLD, 14 ) );
-        b3.setBounds( 300, 450, 230, 30 );
-        b3.setBackground( Color.BLACK );
-        b3.setForeground( Color.WHITE );
+        cardNumberEnter = new JTextField( 15 );
+        cardNumberEnter.setFont( new Font( "Arial", Font.BOLD, 14 ) );
+        cardNumberEnter.setBounds( 300, 235, 230, 30 );
 
 
-        add( j1 );
-        add( j2 );
-        add( j3 );
-        add( t1 );
-        add( p1 );
-        add( b1 );
-        add( b2 );
-        add( b3 );
+        enterPin = new JPasswordField( 15 );
+        enterPin.setFont( new Font( "Arial", Font.BOLD, 14 ) );
+        enterPin.setBounds( 300, 335, 230, 30 );
+
+        signIn = new JButton( "SIGN IN" );
+        signIn.setFont( new Font( "Arial", Font.BOLD, 14 ) );
+        signIn.setBounds( 300, 400, 100, 30 );
+        signIn.setBackground( Color.BLACK );
+        signIn.setForeground( Color.WHITE );
+
+        clear = new JButton( "CLEAR" );
+        clear.setFont( new Font( "Arial", Font.BOLD, 14 ) );
+        clear.setBounds( 430, 400, 100, 30 );
+        clear.setBackground( Color.BLACK );
+        clear.setForeground( Color.WHITE );
+
+        signUp = new JButton( "SIGN UP" );
+        signUp.setFont( new Font( "Arial", Font.BOLD, 14 ) );
+        signUp.setBounds( 300, 450, 230, 30 );
+        signUp.setBackground( Color.BLACK );
+        signUp.setForeground( Color.WHITE );
+
+
+        add( headLine );
+        add( cardNumber );
+        add( pin );
+        add( cardNumberEnter );
+        add( enterPin );
+        add( signIn );
+        add( clear );
+        add( signUp );
 
     }
     public static void main(String[] args) {
