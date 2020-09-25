@@ -9,8 +9,11 @@ package ATM_System;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
     private JLabel headLine, cardNumber, pin;
     private JTextField cardNumberEnter;
     private JPasswordField enterPin;
@@ -73,6 +76,10 @@ public class Login extends JFrame {
         signUp.setBackground( Color.BLACK );
         signUp.setForeground( Color.WHITE );
 
+        signIn.addActionListener( this );
+        clear.addActionListener( this );
+        signUp.addActionListener( this );
+
 
         add( headLine );
         add( cardNumber );
@@ -84,6 +91,38 @@ public class Login extends JFrame {
         add( signUp );
 
     }
+
+    public void actionPerformed(ActionEvent ae) {
+
+        try {
+            conn c1 = new conn();
+            String a = cardNumberEnter.getText();
+            String b = enterPin.getText();
+            String q = "select * from login where cardno = '" + a + "' and pin = '" + b + "'";
+            ResultSet rs = c1.s.executeQuery( q );
+
+            if (ae.getSource() == signIn) {
+                if (rs.next()) {
+                    new Transaction().setVisible( true );
+                    setVisible( false );
+
+                } else {
+                    JOptionPane.showMessageDialog( null, "Incorrect Card Number or Password" );
+
+                }
+            } else if (ae.getSource() == clear) {
+                cardNumberEnter.setText( "" );
+                enterPin.setText( "" );
+            } else if (ae.getSource() == signUp) {
+                new Signup().setVisible( true );
+                setVisible( false );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println( "error: " + e );
+        }
+    }
+
     public static void main(String[] args) {
         new Login().setVisible( true );
     }

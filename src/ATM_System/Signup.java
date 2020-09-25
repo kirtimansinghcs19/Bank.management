@@ -9,9 +9,11 @@ package ATM_System;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Signup extends JFrame {
+public class Signup extends JFrame implements ActionListener {
     JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15;
     JTextField t1, t2, t3, t4, t5, t6, t7;
     JRadioButton r1, r2, r3, r4, r5;
@@ -241,12 +243,67 @@ public class Signup extends JFrame {
         b.setBounds( 620, 660, 80, 30 );
         add( b );
 
+        b.addActionListener( this );
+
 
         getContentPane().setBackground( Color.WHITE );
 
         setSize( 850, 850 );
         setLocation( 500, 90 );
 
+
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+
+
+        String a = t1.getText();
+        String b = t2.getText();
+
+        String ac = (String) c1.getSelectedItem();
+        String bc = (String) c2.getSelectedItem();
+        String cc = (String) c3.getSelectedItem();
+
+        String d = null;
+        if (r1.isSelected()) {
+            d = "Male";
+        } else if (r2.isSelected()) {
+            d = "Female";
+        }
+
+        String e = t3.getText();
+        String f = null;
+        if (r3.isSelected()) {
+            f = "Married";
+        } else if (r4.isSelected()) {
+            f = "Unmarried";
+        } else if (r5.isSelected()) {
+            f = "Other";
+        }
+
+        String g = t4.getText();
+        String h = t5.getText();
+        String i = t6.getText();
+        String j = t7.getText();
+
+
+        try {
+
+            if (t6.getText().equals( "" )) {
+                JOptionPane.showMessageDialog( null, "Fill all the required fields" );
+            } else {
+
+                conn c1 = new conn();
+                String q1 = "insert into signup values('" + a + "','" + b + "','" + ac + "','" + bc + "','" + cc + "','" + d + "','" + e + "','" + f + "','" + g + "','" + h + "','" + i + "','" + j + "','" + first + "')";
+                c1.s.executeUpdate( q1 );
+
+                new Signup2().setVisible( true );
+                setVisible( false );
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
