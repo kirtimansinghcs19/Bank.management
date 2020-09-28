@@ -9,8 +9,10 @@ package ATM_System;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Signup1 extends JFrame {
+public class Signup1 extends JFrame implements ActionListener {
     JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12;
     JButton b;
     JRadioButton r1, r2, r3, r4;
@@ -207,12 +209,65 @@ public class Signup1 extends JFrame {
         b.setBounds( 570, 600, 100, 30 );
         add( b );
 
+        b.addActionListener( this );
         getContentPane().setBackground( Color.WHITE );
 
         setSize( 850, 850 );
         setLocation( 500, 90 );
         setVisible( true );
     }
+
+    public void actionPerformed(ActionEvent ae) {
+
+
+        String a = (String) c1.getSelectedItem();
+        String b = (String) c2.getSelectedItem();
+        String c = (String) c3.getSelectedItem();
+        String d = (String) c4.getSelectedItem();
+        String e = (String) c5.getSelectedItem();
+
+        String f = t1.getText();
+        String g = t2.getText();
+
+        String h = "";
+        if (r1.isSelected()) {
+            h = "Yes";
+        } else if (r2.isSelected()) {
+            h = "No";
+        }
+
+        String i = "";
+        if (r3.isSelected()) {
+            i = "Yes";
+        } else if (r4.isSelected()) {
+            i = "No";
+        }
+
+        String j = t3.getText();
+
+
+        try {
+
+
+            if (t2.getText().equals( "" )) {
+                JOptionPane.showMessageDialog( null, "Fill all the required fields" );
+            } else {
+                conn c1 = new conn();
+                String q1 = "insert into signup2 values('" + a + "','" + b + "','" + c + "','" + d + "','" + e + "','" + f + "','" + g + "','" + h + "','" + i + "','" + j + "')";
+                c1.s.executeUpdate( q1 );
+
+                new Signup2().setVisible( true );
+                setVisible( false );
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
+    }
+
 
     public static void main(String[] args) {
         new Signup().setVisible( true );

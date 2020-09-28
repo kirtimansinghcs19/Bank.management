@@ -9,8 +9,10 @@ package ATM_System;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Deposit extends JFrame {
+public class Deposit extends JFrame implements ActionListener {
     JTextField t1, t2;
     JButton b1, b2, b3;
     JLabel l1, l2, l3;
@@ -93,6 +95,57 @@ public class Deposit extends JFrame {
         setSize( 800, 800 );
         setLocation( 500, 90 );
         setVisible( true );
+
+        b1.addActionListener( this );
+        b2.addActionListener( this );
+        b3.addActionListener( this );
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+
+        try {
+
+            String a = t1.getText();
+            String b = t2.getText();
+
+
+            if (ae.getSource() == b1) {
+                if (t1.getText().equals( "" )) {
+
+                    JOptionPane.showMessageDialog( null, "Please enter the Amount to you want to Deposit" );
+
+                } else {
+
+                    conn c1 = new conn();
+
+
+                    String q1 = "insert into bank values('" + b + "','" + a + "',null,'" + a + "')";
+                    c1.s.executeUpdate( q1 );
+
+
+                    JOptionPane.showMessageDialog( null, "Rs. " + a + " Deposited Successfully" );
+
+                    new Transaction().setVisible( true );
+                    setVisible( false );
+
+
+                }
+
+            } else if (ae.getSource() == b2) {
+
+                new Transaction().setVisible( true );
+                setVisible( false );
+
+            } else if (ae.getSource() == b3) {
+
+                System.exit( 0 );
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println( "error: " + e );
+        }
+
     }
 
     public static void main(String[] args) {

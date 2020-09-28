@@ -9,8 +9,10 @@ package ATM_System;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Pin extends JFrame {
+public class Pin extends JFrame implements ActionListener {
     JPasswordField t1, t2, t3;
     JButton b1, b2;
     JLabel l1, l2, l3, l4;
@@ -29,6 +31,8 @@ public class Pin extends JFrame {
         pad = String.format( "%" + w + "s", pad );
         setTitle( pad + "PIN CHANGE" );
 
+        b1.addActionListener( this );
+        b2.addActionListener( this );
 
         l1 = new JLabel( "CHANGE YOUR PIN" );
         l1.setFont( new Font( "System", Font.BOLD, 35 ) );
@@ -99,6 +103,67 @@ public class Pin extends JFrame {
         setVisible( true );
 
     }
+
+    public void actionPerformed(ActionEvent ae) {
+
+        try {
+
+            String a = t1.getText();
+            String b = t2.getText();
+            String c = t3.getText();
+
+
+            if (ae.getSource() == b1) {
+                if (t1.getText().equals( "" )) {
+
+                    JOptionPane.showMessageDialog( null, "Please Enter Current PIN" );
+
+                }
+                if (t2.getText().equals( "" )) {
+
+                    JOptionPane.showMessageDialog( null, "Enter New PIN" );
+                }
+                if (t3.getText().equals( "" )) {
+
+                    JOptionPane.showMessageDialog( null, "Re-Enter new PIN" );
+                }
+
+                if (t2.getText().equals( t3.getText() )) {
+
+                    conn c1 = new conn();
+                    String q1 = "update bank set pin = '" + b + "' where pin = '" + a + "' ";
+                    String q2 = "update login set pin = '" + b + "' where pin = '" + a + "' ";
+                    String q3 = "update signup3 set pin = '" + b + "' where pin = '" + a + "' ";
+
+                    c1.s.executeUpdate( q1 );
+                    c1.s.executeUpdate( q2 );
+                    c1.s.executeUpdate( q3 );
+
+
+                    JOptionPane.showMessageDialog( null, "PIN changed successfully" );
+
+                    new Transaction().setVisible( true );
+                    setVisible( false );
+
+                } else {
+
+                    JOptionPane.showMessageDialog( null, "PIN entered doesn't match" );
+                }
+
+
+            } else if (ae.getSource() == b2) {
+
+                new Transaction().setVisible( true );
+                setVisible( false );
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println( "error: " + e );
+        }
+
+    }
+
 
     public static void main(String[] args) {
         new Pin().setVisible( true );

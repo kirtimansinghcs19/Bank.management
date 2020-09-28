@@ -9,8 +9,11 @@ package ATM_System;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
-public class Withdrawl extends JFrame {
+public class Withdrawl extends JFrame implements ActionListener {
     JTextField t1, t2;
     JButton b1, b2, b3;
     JLabel l1, l2, l3, l4;
@@ -93,12 +96,73 @@ public class Withdrawl extends JFrame {
         b3.setBounds( 300, 550, 200, 50 );
         add( b3 );
 
-
+        b1.addActionListener( this );
+        b2.addActionListener( this );
+        b3.addActionListener( this );
         getContentPane().setBackground( Color.WHITE );
 
         setSize( 800, 800 );
         setLocation( 500, 90 );
         setVisible( true );
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+
+        try {
+
+            String a = t1.getText();
+            String b = t2.getText();
+
+
+            if (ae.getSource() == b1) {
+                if (t1.getText().equals( "" )) {
+
+                    JOptionPane.showMessageDialog( null, "Please enter the Amount to you want to Withdraw" );
+
+                } else {
+
+                    conn c1 = new conn();
+
+
+                    ResultSet rs = c1.s.executeQuery( " select * from bank where pin = '" + b + "' " );
+
+                    double balance = 0;
+                    if (rs.next()) {
+                        String pin = rs.getString( "pin" );
+
+                        balance = rs.getDouble( "balance" );
+
+                        double d = Double.parseDouble( a );
+                        balance -= d;
+                        String q1 = "insert into bank values('" + pin + "',null,'" + d + "','" + balance + "')";
+
+                        c1.s.executeUpdate( q1 );
+                    }
+
+
+                    JOptionPane.showMessageDialog( null, "Rs. " + a + " Debited Successfully" );
+
+                    new Transaction().setVisible( true );
+                    setVisible( false );
+
+
+                }
+
+            } else if (ae.getSource() == b2) {
+
+                new Transaction().setVisible( true );
+                setVisible( false );
+
+            } else if (ae.getSource() == b3) {
+
+                System.exit( 0 );
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println( "error: " + e );
+        }
+
     }
 
     public static void main(String[] args) {

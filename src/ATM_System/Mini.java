@@ -8,8 +8,11 @@
 package ATM_System;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
-public class Mini extends JFrame {
+public class Mini extends JFrame implements ActionListener {
     JTable t1;
     JButton b1;
     String x[] = {"Customer Name", "Date", "Deposit", "Withdraw", "Balance"};
@@ -23,11 +26,39 @@ public class Mini extends JFrame {
         String pinn = JOptionPane.showInputDialog( "Enter PIN" );
 
 
+        try {
+            conn c1 = new conn();
+            ResultSet rs = c1.s.executeQuery( "SELECT * FROM bank where pin = '" + pinn + "'" );
+            //  String s1 = "select * from bank";
+            //  ResultSet rs  = c1.s.executeQuery(s1);
+            while (rs.next()) {
+                y[i][j++] = rs.getString( "customer_name" );
+                y[i][j++] = rs.getString( "date" );
+                y[i][j++] = rs.getString( "deposit" );
+                y[i][j++] = rs.getString( "withdraw" );
+                y[i][j++] = rs.getString( "balance" );
+                i++;
+                j = 0;
+            }
+            t1 = new JTable( y, x );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         b1 = new JButton( "Print" );
         add( b1, "South" );
         JScrollPane sp = new JScrollPane( t1 );
         add( sp );
+        b1.addActionListener( this );
+    }
 
+    public void actionPerformed(ActionEvent ae) {
+        try {
+            t1.print();
+        } catch (Exception e) {
+        }
     }
 
     public static void main(String[] args) {

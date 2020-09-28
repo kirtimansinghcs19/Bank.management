@@ -9,8 +9,11 @@ package ATM_System;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
-public class Transaction extends JFrame {
+public class Transaction extends JFrame implements ActionListener {
 
     JLabel l1;
     JButton b1, b2, b3, b4, b5, b6, b7;
@@ -101,6 +104,74 @@ public class Transaction extends JFrame {
         setSize( 800, 800 );
         setLocation( 500, 90 );
         setVisible( true );
+
+
+        b1.addActionListener( this );
+        b2.addActionListener( this );
+        b3.addActionListener( this );
+        b4.addActionListener( this );
+        b5.addActionListener( this );
+        b6.addActionListener( this );
+        b7.addActionListener( this );
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+
+        if (ae.getSource() == b1) {
+
+            new Deposit().setVisible( true );
+            setVisible( false );
+
+        } else if (ae.getSource() == b2) {
+
+            new Withdrawl().setVisible( true );
+            setVisible( false );
+
+        } else if (ae.getSource() == b3) {
+
+            new Cash().setVisible( true );
+            setVisible( false );
+
+        } else if (ae.getSource() == b4) {
+
+            new Mini().setVisible( true );
+            setVisible( false );
+
+        } else if (ae.getSource() == b5) {
+
+            new Pin().setVisible( true );
+            setVisible( false );
+
+        } else if (ae.getSource() == b6) {
+
+            String pinn = JOptionPane.showInputDialog( "Enter PIN" );
+            conn c1 = new conn();
+
+            try {
+
+                ResultSet rs = c1.s.executeQuery( " SELECT balance FROM bank ORDER BY pin  = '" + pinn + "' DESC LIMIT 1" );
+
+                if (rs.next()) {
+
+                    String balance = rs.getString( "balance" );
+
+                    JOptionPane.showMessageDialog( null, "Your Account Balance is " + balance );
+
+                }
+
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+            }
+
+
+        } else if (ae.getSource() == b7) {
+
+            System.exit( 0 );
+
+        }
 
 
     }
